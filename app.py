@@ -11,9 +11,9 @@ st.set_page_config(
 )
 
 # S3 Configuration - Use environment variables or Streamlit secrets
-AWS_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY_ID") or st.secrets.get("AWS_ACCESS_KEY_ID", "")
-AWS_SECRET_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY") or st.secrets.get("AWS_SECRET_ACCESS_KEY", "")
-BUCKET_NAME = os.environ.get("S3_BUCKET_NAME") or st.secrets.get("S3_BUCKET_NAME", "indicvoices")
+AWS_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY_ID", "")
+AWS_SECRET_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "")
+BUCKET_NAME = os.environ.get("S3_BUCKET_NAME", "indicvoices")
 
 @st.cache_resource
 def get_s3_client():
@@ -78,7 +78,7 @@ def main():
     st.title("🎧 IndicVoices Audio Dashboard")
     
     if not AWS_ACCESS_KEY or not AWS_SECRET_KEY:
-        st.error("⚠️ AWS credentials not configured. Please set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables or add them to .streamlit/secrets.toml")
+        st.error("⚠️ AWS credentials not configured. Please set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables.")
         return
     
     s3_client = get_s3_client()
